@@ -91,7 +91,8 @@ function AdminDashboardContent() {
 
   const fetchUsers = async () => {
     try {
-      const response = await fetch('/api/users');
+      // Fetch all users without pagination limit for accurate count
+      const response = await fetch('/api/users?limit=1000');
       if (response.ok) {
         const data = await response.json();
         setUsers(data);
