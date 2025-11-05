@@ -91,8 +91,14 @@ function AdminDashboardContent() {
 
   const fetchUsers = async () => {
     try {
-      // Fetch all users without pagination limit for accurate count
-      const response = await fetch('/api/users?limit=1000');
+      // Add cache-busting timestamp to prevent stale data
+      const timestamp = new Date().getTime();
+      const response = await fetch(`/api/users?limit=1000&t=${timestamp}`, {
+        cache: 'no-store',
+        headers: {
+          'Cache-Control': 'no-cache',
+        }
+      });
       if (response.ok) {
         const data = await response.json();
         setUsers(data);
